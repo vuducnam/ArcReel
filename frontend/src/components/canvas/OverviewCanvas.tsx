@@ -59,7 +59,7 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
   const handleUpload = useCallback(
     async (file: File) => {
       await API.uploadFile(projectName, "source", file);
-      useAppStore.getState().pushToast(`源文件 "${file.name}" 上传成功`, "success");
+      useAppStore.getState().pushToast(`Tệp nguồn "${file.name}" tải lên thành công`, "success");
     },
     [projectName],
   );
@@ -74,11 +74,11 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
     try {
       await API.generateOverview(projectName);
       await refreshProject();
-      useAppStore.getState().pushToast("项目概述已重新生成", "success");
+      useAppStore.getState().pushToast("Tổng quan dự án đã được tạo lại", "success");
     } catch (err) {
       useAppStore
         .getState()
-        .pushToast(`重新生成失败: ${(err as Error).message}`, "error");
+        .pushToast(`Tạo lại thất bại: ${(err as Error).message}`, "error");
     } finally {
       setRegenerating(false);
     }
@@ -94,11 +94,11 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
       try {
         await API.uploadStyleImage(projectName, file);
         await refreshProject();
-        useAppStore.getState().pushToast("风格参考图已更新", "success");
+        useAppStore.getState().pushToast("Ảnh tham chiếu phong cách đã được cập nhật", "success");
       } catch (err) {
         useAppStore
           .getState()
-          .pushToast(`上传失败: ${(err as Error).message}`, "error");
+          .pushToast(`Tải lên thất bại: ${(err as Error).message}`, "error");
       } finally {
         setUploadingStyleImage(false);
       }
@@ -108,17 +108,17 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
 
   const handleDeleteStyleImage = useCallback(async () => {
     if (deletingStyleImage || !projectData?.style_image) return;
-    if (!confirm("确定删除当前风格参考图吗？")) return;
+    if (!confirm("Bạn có chắc muốn xóa ảnh tham chiếu phong cách hiện tại không?")) return;
 
     setDeletingStyleImage(true);
     try {
       await API.deleteStyleImage(projectName);
       await refreshProject();
-      useAppStore.getState().pushToast("风格参考图已删除", "success");
+      useAppStore.getState().pushToast("Ảnh tham chiếu phong cách đã được xóa", "success");
     } catch (err) {
       useAppStore
         .getState()
-        .pushToast(`删除失败: ${(err as Error).message}`, "error");
+        .pushToast(`Xóa thất bại: ${(err as Error).message}`, "error");
     } finally {
       setDeletingStyleImage(false);
     }
@@ -130,11 +130,11 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
     try {
       await API.updateStyleDescription(projectName, styleDescriptionDraft.trim());
       await refreshProject();
-      useAppStore.getState().pushToast("风格描述已保存", "success");
+      useAppStore.getState().pushToast("Mô tả phong cách đã được lưu", "success");
     } catch (err) {
       useAppStore
         .getState()
-        .pushToast(`保存失败: ${(err as Error).message}`, "error");
+        .pushToast(`Lưu thất bại: ${(err as Error).message}`, "error");
     } finally {
       setSavingStyleDescription(false);
     }
@@ -143,7 +143,7 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
   if (!projectData) {
     return (
       <div className="flex h-full items-center justify-center text-gray-500">
-        加载项目数据中...
+        Đang tải dữ liệu dự án...
       </div>
     );
   }
@@ -161,9 +161,9 @@ export function OverviewCanvas({ projectName, projectData }: OverviewCanvasProps
     <section className="rounded-2xl border border-gray-800 bg-gray-900/90 p-4 sm:p-5">
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
-          <h3 className="text-sm font-semibold text-gray-200">项目风格</h3>
+          <h3 className="text-sm font-semibold text-gray-200">Phong cách dự án</h3>
           <p className="max-w-2xl text-xs leading-5 text-gray-500">
-            参考图会参与后续画面生成；风格描述用于补充视觉规则，校准整体调性、材质和镜头气质。
+            Ảnh tham chiếu sẽ được sử dụng trong quá trình tạo hình ảnh; mô tả phong cách dùng để bổ sung quy tắc thị giác, hiệu chỉnh tông màu, chất liệu và ngôn ngữ ống kính.
           </p>
         </div>
         <div className="inline-flex items-center rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-xs text-gray-300">

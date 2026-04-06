@@ -62,10 +62,10 @@ function TaskRow({
   onToggleError: (taskId: string) => void;
 }) {
   const statusLabel: Record<TaskItem["status"], string> = {
-    running: "生成中...",
-    queued: "排队中",
-    succeeded: "已完成",
-    failed: "失败",
+    running: "Đang tạo...",
+    queued: "Đang xếp hàng",
+    succeeded: "Hoàn thành",
+    failed: "Thất bại",
   };
 
   const statusColor: Record<TaskItem["status"], string> = {
@@ -228,7 +228,7 @@ function ChannelSection({
         {title}
         {running.length > 0 && (
           <span className="ml-auto text-indigo-400">
-            {running.length} 运行中
+            {running.length} đang chạy
           </span>
         )}
       </div>
@@ -244,7 +244,7 @@ function ChannelSection({
         ))}
       </AnimatePresence>
       {visible.length === 0 && (
-        <div className="px-3 py-2 text-xs text-gray-600">暂无任务</div>
+        <div className="px-3 py-2 text-xs text-gray-600">Chưa có tác vụ</div>
       )}
     </div>
   );
@@ -287,27 +287,27 @@ export function TaskHud({ anchorRef }: { anchorRef: RefObject<HTMLElement | null
           {/* 统计栏 */}
           <div className="flex gap-3 border-b border-gray-800 px-3 py-2 text-xs text-gray-400">
             <span>
-              排队{" "}
+              Hàng chờ{" "}
               <strong className="text-gray-200">{stats.queued}</strong>
             </span>
             <span>
-              运行{" "}
+              Đang chạy{" "}
               <strong className="text-indigo-400">{stats.running}</strong>
             </span>
             <span>
-              完成{" "}
+              Hoàn thành{" "}
               <strong className="text-emerald-400">{stats.succeeded}</strong>
             </span>
             <span>
-              失败{" "}
+              Thất bại{" "}
               <strong className="text-red-400">{stats.failed}</strong>
             </span>
           </div>
 
           {/* 双通道 */}
           <div className="max-h-80 divide-y divide-gray-800/50 overflow-y-auto">
-            <ChannelSection title="图片通道" icon={Image} tasks={imageTasks} />
-            <ChannelSection title="视频通道" icon={Video} tasks={videoTasks} />
+            <ChannelSection title="Kênh hình ảnh" icon={Image} tasks={imageTasks} />
+            <ChannelSection title="Kênh video" icon={Video} tasks={videoTasks} />
           </div>
         </motion.div>
       )}
